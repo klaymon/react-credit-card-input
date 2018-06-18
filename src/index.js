@@ -28,6 +28,7 @@ const FieldWrapper = styled.div`
   background-color: white;
   padding: 10px;
   border-radius: 3px;
+  overflow: hidden;
   ${({ styled }) => ({ ...styled })};
 
   &.is-invalid {
@@ -44,7 +45,7 @@ const InputWrapper = styled.label`
   margin-left: 0.5em;
   display: flex;
   align-items: center;
-  transition: opacity 2s, transform 2s;
+  transition: transform 1s;
 
   &::after {
     content: attr(data-max);
@@ -115,6 +116,7 @@ class CreditCardInput extends Component<Props, State> {
   cardExpiryField: any;
   cardNumberField: any;
   cvcField: any;
+  zipField: any;
 
   static defaultProps = {
     cardCVCInputRenderer: inputRenderer,
@@ -426,6 +428,8 @@ class CreditCardInput extends Component<Props, State> {
       inputStyle,
       invalidStyle
     } = this.props;
+    const transformedStyle = showZip ? {transform: 'translateX(0)'} : {transform: 'translateX(4rem)'}
+
     return (
       <Container className={containerClassName} styled={containerStyle}>
         <FieldWrapper
@@ -465,7 +469,11 @@ class CreditCardInput extends Component<Props, State> {
               }
             })}
           </InputWrapper>
-          <InputWrapper inputStyled={inputStyle} data-max="MM / YY 9">
+          <InputWrapper
+            inputStyled={inputStyle}
+            data-max="MM / YY 9"
+            style={transformedStyle}
+          >
             {cardExpiryInputRenderer({
               handleCardExpiryChange: onChange =>
                 this.handleCardExpiryChange({ onChange }),
@@ -490,7 +498,11 @@ class CreditCardInput extends Component<Props, State> {
               }
             })}
           </InputWrapper>
-          <InputWrapper inputStyled={inputStyle} data-max="99999">
+          <InputWrapper
+            inputStyled={inputStyle}
+            data-max="99999"
+            style={transformedStyle}
+          >
             {cardCVCInputRenderer({
               handleCardCVCChange: onChange =>
                 this.handleCardCVCChange({ onChange }),
@@ -514,7 +526,10 @@ class CreditCardInput extends Component<Props, State> {
               }
             })}
           </InputWrapper>
-          <InputWrapper inputStyled={inputStyle} data-max="999999">
+          <InputWrapper
+            data-max="999999"
+            style={transformedStyle}
+          >
             {cardZipInputRenderer({
               handleCardZipChange: onChange =>
                 this.handleCardZipChange({ onChange }),
@@ -533,7 +548,7 @@ class CreditCardInput extends Component<Props, State> {
                 ...cardZipInputProps,
                 onBlur: this.handleCardZipBlur(),
                 onChange: this.handleCardZipChange(),
-                onKeyDown: this.handleKeyDown(this.cardExpiryField),
+                onKeyDown: this.handleKeyDown(this.cvcField),
                 onKeyPress: this.handleCardZipKeyPress
               }
             })}
