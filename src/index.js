@@ -88,6 +88,7 @@ type Props = {
   cardCVCInputRenderer: Function,
   cardExpiryInputRenderer: Function,
   cardNumberInputRenderer: Function,
+  cardNumberValidateEarly: boolean,
   cardZipInputRenderer: Function,
   cardExpiryInputProps: Object,
   cardNumberInputProps: Object,
@@ -106,7 +107,8 @@ type Props = {
   inputClassName: string,
   inputStyle: Object,
   invalidClassName: string,
-  invalidStyle: Object
+  invalidStyle: Object,
+  onValidationChange: Function
 };
 type State = {
   cardImage: string,
@@ -147,7 +149,8 @@ class CreditCardInput extends Component<Props, State> {
     inputClassName: '',
     inputStyle: {},
     invalidClassName: 'is-invalid',
-    invalidStyle: {}
+    invalidStyle: {},
+    onValidationChange: () => {}
   };
 
   constructor(props: Props) {
@@ -393,17 +396,17 @@ class CreditCardInput extends Component<Props, State> {
   };
 
   setFieldInvalid = (errorText: string) => {
-    const { invalidClassName } = this.props;
+    const { invalidClassName, onValidationChange } = this.props;
     // $FlowFixMe
     document.getElementById('field-wrapper').classList.add(invalidClassName);
-    this.setState({ errorText });
+    this.setState({ errorText }, onValidationChange(errorText));
   };
 
   setFieldValid = () => {
-    const { invalidClassName } = this.props;
+    const { invalidClassName, onValidationChange } = this.props;
     // $FlowFixMe
     document.getElementById('field-wrapper').classList.remove(invalidClassName);
-    this.setState({ errorText: null });
+    this.setState({ errorText: null }, onValidationChange(null));
   };
 
   render = () => {
