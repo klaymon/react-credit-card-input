@@ -128,6 +128,7 @@ class CreditCardInput extends Component<Props, State> {
     cardCVCInputRenderer: inputRenderer,
     cardExpiryInputRenderer: inputRenderer,
     cardNumberInputRenderer: inputRenderer,
+    cardNumberValidateEarly: false,
     cardZipInputRenderer: inputRenderer,
     cardExpiryInputProps: {},
     cardNumberInputProps: {},
@@ -190,7 +191,7 @@ class CreditCardInput extends Component<Props, State> {
   handleCardNumberChange = (
     { onChange }: { onChange?: ?Function } = { onChange: null }
   ) => (e: SyntheticInputEvent<*>) => {
-    const { enableZipInput } = this.props;
+    const { enableZipInput, cardNumberValidateEarly } = this.props;
     const cardNumber = e.target.value;
     const cardNumberLength = cardNumber.split(' ').join('').length;
     const cardType = payment.fns.cardType(cardNumber);
@@ -212,7 +213,10 @@ class CreditCardInput extends Component<Props, State> {
 
     this.setFieldValid();
     if (cardTypeLengths) {
-      const lastCardTypeLength = cardTypeLengths[cardTypeLengths.length - 1];
+      const validationLength = cardNumberValidateEarly
+        ? cardTypeLengths[0]
+        : cardTypeLengths[cardTypeLengths.length - 1];
+
       for (let length of cardTypeLengths) {
         if (
           length === cardNumberLength &&
@@ -221,7 +225,7 @@ class CreditCardInput extends Component<Props, State> {
           this.cardExpiryField.focus();
           break;
         }
-        if (cardNumberLength === lastCardTypeLength) {
+        if (cardNumberLength >= validationLength) {
           this.setFieldInvalid('Card number is invalid');
         }
       }
@@ -426,7 +430,6 @@ class CreditCardInput extends Component<Props, State> {
       inputStyle,
       invalidStyle
     } = this.props;
-
     return (
       <Container className={containerClassName} styled={containerStyle}>
         <FieldWrapper

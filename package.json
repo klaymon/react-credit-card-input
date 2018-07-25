@@ -1,13 +1,13 @@
 {
-  "name": "react-credit-card-input",
+  "name": "@eaze/react-credit-card-input",
   "version": "1.0.11",
-  "description": "A credit/debit card input field for React",
+  "description": "Eaze fork of a credit/debit card input field for React",
   "license": "MIT",
-  "repository": "github:medipass/react-credit-card-input",
+  "repository": "github:cstumph/react-credit-card-input",
   "author": {
-    "name": "jxom",
-    "email": "jake@medipass.io",
-    "url": "https://medipass.com.au"
+    "name": "cstumph",
+    "email": "cjstumph@gmail.com",
+    "url": "https://eaze.com"
   },
   "main": "lib/index.js",
   "keywords": [
