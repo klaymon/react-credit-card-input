@@ -59,6 +59,9 @@ const InputWrapper = styled.label`
     position: absolute;
     width: 100%;
     font-size: 1em;
+    padding: 0;
+    margin: 0;
+
     ${({ inputStyled }) => ({ ...inputStyled })};
 
     &:focus {
@@ -476,7 +479,7 @@ class CreditCardInput extends Component<Props, State> {
           <InputWrapper
             inputStyled={inputStyle}
             isActive
-            data-max="MM / YY 9"
+            data-max="MM/YY 9"
             translateX={enableZipInput && !showZip}
           >
             {cardExpiryInputRenderer({
