@@ -447,7 +447,7 @@ class CreditCardInput extends Component<Props, State> {
           <CardImage
             className={cardImageClassName}
             styled={cardImageStyle}
-            src={cardImage}
+            src={this.cardNumberField && this.cardNumberField.value ? cardImage : images.placeholder}
           />
           <InputWrapper
             inputStyled={inputStyle}
