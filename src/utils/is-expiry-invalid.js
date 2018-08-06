@@ -8,8 +8,9 @@ const EXPIRY_DATE_REGEX = /^(\d{2})\/(\d{4}|\d{2})$/;
 const MONTH_REGEX = /(0[1-9]|1[0-2])/;
 
 export default (expiryDate: string) => {
-  const splitDate = expiryDate.split('/');
-  if (!EXPIRY_DATE_REGEX.test(expiryDate)) {
+  const strippedDate = expiryDate && expiryDate.replace(/\s/g, '');
+  const splitDate = strippedDate && strippedDate.split('/');
+  if (!EXPIRY_DATE_REGEX.test(strippedDate)) {
     return ERROR_TEXT__INVALID_EXPIRY_DATE;
   }
 
