@@ -256,7 +256,8 @@ class CreditCardInput extends Component<Props, State> {
   handleCardExpiryBlur = (
     { onBlur }: { onBlur?: ?Function } = { onBlur: null }
   ) => (e: SyntheticInputEvent<*>) => {
-    const cardExpiry = e.target.value.split(' / ').join('/');
+    const cardExpiry = formatExpiry(e.target.value);
+
     const expiryError = isExpiryInvalid(cardExpiry);
     if (expiryError) {
       this.setFieldInvalid(expiryError);
@@ -270,14 +271,14 @@ class CreditCardInput extends Component<Props, State> {
   handleCardExpiryChange = (
     { onChange }: { onChange?: ?Function } = { onChange: null }
   ) => (e: SyntheticInputEvent<*>) => {
-    const cardExpiry = e.target.value.split(' / ').join('/');
+    const cardExpiry = formatExpiry(e.target.value);
 
-    this.cardExpiryField.value = formatExpiry(cardExpiry);
+    this.cardExpiryField.value = cardExpiry;
 
     this.setFieldValid();
 
     const expiryError = isExpiryInvalid(cardExpiry);
-    if (cardExpiry.length > 4) {
+    if (cardExpiry && cardExpiry.length > 4) {
       if (expiryError) {
         this.setFieldInvalid(expiryError);
       } else {
@@ -294,7 +295,7 @@ class CreditCardInput extends Component<Props, State> {
     const value = e.target.value;
     this.checkIsNumeric(e);
     if (value && !isHighlighted()) {
-      const valueLength = value.split(' / ').join('').length;
+      const valueLength = value.split('/').join('').length;
       if (valueLength >= 4) {
         e.preventDefault();
       }

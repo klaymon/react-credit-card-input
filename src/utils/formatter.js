@@ -144,9 +144,16 @@ export const formatExpiry = prevExpiry => {
       return expiry[0];
     }
     if (/\d{2}/.test(expiry)) {
-      return `${expiry[0]} / `;
+      return `${expiry[0]}/`;
     }
   }
-  return expiry.join(' / ');
+
+  expiry = expiry.join('/');
+
+  if (expiry.length > 5) {
+    expiry = expiry.slice(0, 3) + expiry.slice(-2, expiry.length);
+  }
+
+  return expiry;
 };
 export const isHighlighted = () => window.getSelection().type === 'Range';
