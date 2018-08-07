@@ -150,7 +150,7 @@ export const formatExpiry = prevExpiry => {
 
   expiry = expiry.join('/');
 
-  if (expiry.length > 7) {
+  if (expiry.length > 5) {
     expiry = expiry.slice(0, 3) + expiry.slice(-4, expiry.length);
   }
 
