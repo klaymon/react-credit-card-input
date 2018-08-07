@@ -144,11 +144,11 @@ export const formatExpiry = prevExpiry => {
       return expiry[0];
     }
     if (/\d{2}/.test(expiry)) {
-      return `${expiry[0]} / `;
+      return `${expiry[0]}/`;
     }
   }
 
-  expiry = expiry.join(' / ');
+  expiry = expiry.join('/');
 
   if (expiry.length > 7) {
     expiry = expiry.slice(0, 3) + expiry.slice(-4, expiry.length);
